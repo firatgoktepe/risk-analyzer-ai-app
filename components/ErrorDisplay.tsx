@@ -2,6 +2,7 @@
 
 import { AlertCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface ErrorDisplayProps {
   message: string;
@@ -14,6 +15,7 @@ export default function ErrorDisplay({
   onDismiss,
   variant = "error",
 }: ErrorDisplayProps) {
+  const t = useTranslations();
   const isError = variant === "error";
 
   return (
@@ -46,7 +48,7 @@ export default function ErrorDisplay({
                 ? "hover:bg-destructive/20"
                 : "hover:bg-yellow-200 dark:hover:bg-yellow-800"
             )}
-            aria-label="Dismiss error"
+            aria-label={t("errors.dismiss")}
           >
             <X className="w-4 h-4" />
           </button>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { RotateCcw, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { UploadedPhoto } from "@/app/page";
+import type { UploadedPhoto } from "@/types";
 
 interface PhotoPreviewProps {
   photo: UploadedPhoto;

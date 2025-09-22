@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { AnalysisResult } from '@/app/page';
+import { AnalysisResult } from '@/types';
 
 export interface PDFGenerationOptions {
     analysisResults: AnalysisResult;

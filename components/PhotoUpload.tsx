@@ -3,7 +3,8 @@
 import { useCallback, useState } from "react";
 import { Upload, Camera, Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { UploadedPhoto } from "@/app/page";
+import { useTranslations } from "next-intl";
+import type { UploadedPhoto } from "@/types";
 
 interface PhotoUploadProps {
   onPhotoUpload: (photo: UploadedPhoto) => void;
@@ -13,19 +14,26 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 export default function PhotoUpload({ onPhotoUpload }: PhotoUploadProps) {
+  const t = useTranslations();
   const [isDragOver, setIsDragOver] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
-  const validateFile = (file: File): string | null => {
-    if (!ACCEPTED_TYPES.includes(file.type)) {
-      return "Please upload a valid image file (JPEG, PNG, or WebP)";
-    }
-    if (file.size > MAX_FILE_SIZE) {
-      return "File size must be less than 10MB";
-    }
-    return null;
-  };
+  const validateFile = useCallback(
+    (file: File): string | null => {
+      if (!ACCEPTED_TYPES.includes(file.type)) {
+        return (
+          t("errors.invalidFormat") ||
+          "Please upload a valid image file (JPEG, PNG, or WebP)"
+        );
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        return t("errors.fileSize") || "File size must be less than 10MB";
+      }
+      return null;
+    },
+    [t]
+  );
 
   const processFile = useCallback(
     async (file: File) => {
@@ -64,12 +72,15 @@ export default function PhotoUpload({ onPhotoUpload }: PhotoUploadProps) {
         });
       } catch (error) {
         console.error("Photo processing error:", error);
-        setUploadError("Failed to process the image. Please try again.");
+        setUploadError(
+          t("errors.processing") ||
+            "Failed to process the image. Please try again."
+        );
       } finally {
         setIsProcessing(false);
       }
     },
-    [onPhotoUpload]
+    [onPhotoUpload, t, validateFile]
   );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -144,13 +155,11 @@ export default function PhotoUpload({ onPhotoUpload }: PhotoUploadProps) {
           {/* Instructions */}
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-foreground">
-              Upload a workplace photo
+              {t("upload.title")}
             </h3>
-            <p className="text-muted-foreground">
-              Drag and drop your image here, or click to select
-            </p>
+            <p className="text-muted-foreground">{t("upload.dragAndDrop")}</p>
             <p className="text-sm text-muted-foreground">
-              Supports JPEG, PNG, WebP (max 10MB)
+              {t("upload.supportedFormats")}
             </p>
           </div>
 
@@ -172,7 +181,7 @@ export default function PhotoUpload({ onPhotoUpload }: PhotoUploadProps) {
               )}
             >
               <ImageIcon className="w-4 h-4" />
-              Choose from Gallery
+              {t("upload.chooseFromGallery")}
             </label>
           </div>
 
@@ -195,7 +204,7 @@ export default function PhotoUpload({ onPhotoUpload }: PhotoUploadProps) {
               )}
             >
               <Camera className="w-4 h-4" />
-              Take Photo
+              {t("upload.takePhoto")}
             </label>
           </div>
         </div>
@@ -205,7 +214,7 @@ export default function PhotoUpload({ onPhotoUpload }: PhotoUploadProps) {
           <div className="absolute inset-0 flex items-center justify-center bg-background/80 rounded-lg">
             <div className="flex items-center gap-2 text-muted-foreground">
               <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-              Processing image...
+              {t("upload.analyzing")}
             </div>
           </div>
         )}
@@ -221,7 +230,8 @@ export default function PhotoUpload({ onPhotoUpload }: PhotoUploadProps) {
       {/* Help Text */}
       <div className="mt-6 text-center">
         <p className="text-sm text-muted-foreground">
-          Upload a clear photo of your workplace for AI-powered safety analysis
+          {t("upload.helpText") ||
+            "Upload a clear photo of your workplace for AI-powered safety analysis"}
         </p>
       </div>
     </div>

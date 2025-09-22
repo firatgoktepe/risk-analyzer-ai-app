@@ -1,0 +1,48 @@
+{
+  "title": "İş Güvenliği Analizörü",
+  "description": "İş yeri güvenliği için AI destekli fotoğraf analizi",
+  "upload": {
+    "title": "İş Yeri Fotoğrafı Yükle",
+    "dragAndDrop": "İş yeri fotoğrafınızı buraya sürükleyip bırakın",
+    "or": "veya",
+    "browse": "Dosyalara Gözat",
+    "supportedFormats": "Desteklenen formatlar: JPG, PNG, WEBP (maks 10MB)",
+    "analyzing": "Analiz ediliyor...",
+    "helpText": "AI destekli güvenlik analizi için işyerinizin net bir fotoğrafını yükleyin",
+    "chooseFromGallery": "Galeriden Seç",
+    "takePhoto": "Fotoğraf Çek"
+  },
+  "preview": {
+    "analyze": "Güvenlik Risklerini Analiz Et",
+    "reset": "Farklı Fotoğraf Yükle",
+    "reanalyze": "Tekrar Analiz Et"
+  },
+  "results": {
+    "title": "Güvenlik Analiz Sonuçları",
+    "noRisks": "Bu iş yeri fotoğrafında önemli güvenlik riski tespit edilmedi.",
+    "downloadReport": "PDF Rapor İndir",
+    "riskLevels": {
+      "low": "Düşük Risk",
+      "medium": "Orta Risk",
+      "high": "Yüksek Risk"
+    }
+  },
+  "errors": {
+    "generic": "Fotoğraf analiz edilemedi. Lütfen tekrar deneyin.",
+    "apiKey": "API yapılandırma hatası. Lütfen ayarlarınızı kontrol edin.",
+    "quota": "API kotası aşıldı. Lütfen daha sonra tekrar deneyin.",
+    "network": "Ağ hatası. Lütfen bağlantınızı kontrol edip tekrar deneyin.",
+    "dismiss": "Kapat",
+    "invalidFormat": "Lütfen geçerli bir resim dosyası yükleyin (JPEG, PNG veya WebP)",
+    "fileSize": "Dosya boyutu 10MB'den küçük olmalıdır",
+    "processing": "Resim işlenemedi. Lütfen tekrar deneyin."
+  },
+  "loading": {
+    "analyzing": "İş yeri güvenliği analiz ediliyor...",
+    "wait": "Bu birkaç dakika sürebilir",
+    "step1": "Görüntü verileri işleniyor...",
+    "step2": "Güvenlik öğeleri tanımlanıyor...",
+    "step3": "Risk seviyeleri değerlendiriliyor...",
+    "timeEstimate": "Bu genellikle 10-30 saniye sürer"
+  }
+}

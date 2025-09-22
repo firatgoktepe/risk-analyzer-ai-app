@@ -1,8 +1,10 @@
 "use client";
 
 import { Brain, Zap } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function LoadingSpinner() {
+  const t = useTranslations();
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className="bg-card border rounded-lg p-8 text-center">
@@ -20,11 +22,9 @@ export default function LoadingSpinner() {
           {/* Loading Text */}
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-foreground">
-              Analyzing Your Photo
+              {t("loading.analyzing")}
             </h3>
-            <p className="text-muted-foreground">
-              AI is examining the workplace for potential safety risks...
-            </p>
+            <p className="text-muted-foreground">{t("loading.wait")}</p>
           </div>
 
           {/* Progress Spinner */}
@@ -37,26 +37,26 @@ export default function LoadingSpinner() {
             <div className="flex items-center gap-3 text-sm">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               <span className="text-muted-foreground">
-                Processing image data...
+                {t("loading.step1") || "Processing image data..."}
               </span>
             </div>
             <div className="flex items-center gap-3 text-sm">
               <div className="w-2 h-2 bg-primary/60 rounded-full animate-pulse delay-300" />
               <span className="text-muted-foreground">
-                Identifying safety elements...
+                {t("loading.step2") || "Identifying safety elements..."}
               </span>
             </div>
             <div className="flex items-center gap-3 text-sm">
               <div className="w-2 h-2 bg-primary/40 rounded-full animate-pulse delay-700" />
               <span className="text-muted-foreground">
-                Evaluating risk levels...
+                {t("loading.step3") || "Evaluating risk levels..."}
               </span>
             </div>
           </div>
 
           {/* Estimated Time */}
           <div className="text-xs text-muted-foreground">
-            This usually takes 10-30 seconds
+            {t("loading.timeEstimate") || "This usually takes 10-30 seconds"}
           </div>
         </div>
       </div>

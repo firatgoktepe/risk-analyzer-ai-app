@@ -1,0 +1,48 @@
+{
+  "title": "Work Safety Analyzer",
+  "description": "AI-powered photo analysis for workplace safety",
+  "upload": {
+    "title": "Upload Workplace Photo",
+    "dragAndDrop": "Drag and drop your workplace photo here",
+    "or": "or",
+    "browse": "Browse Files",
+    "supportedFormats": "Supported formats: JPG, PNG, WEBP (max 10MB)",
+    "analyzing": "Analyzing...",
+    "helpText": "Upload a clear photo of your workplace for AI-powered safety analysis",
+    "chooseFromGallery": "Choose from Gallery",
+    "takePhoto": "Take Photo"
+  },
+  "preview": {
+    "analyze": "Analyze Safety Risks",
+    "reset": "Upload Different Photo",
+    "reanalyze": "Analyze Again"
+  },
+  "results": {
+    "title": "Safety Analysis Results",
+    "noRisks": "No significant safety risks detected in this workplace photo.",
+    "downloadReport": "Download PDF Report",
+    "riskLevels": {
+      "low": "Low Risk",
+      "medium": "Medium Risk", 
+      "high": "High Risk"
+    }
+  },
+  "errors": {
+    "generic": "Failed to analyze photo. Please try again.",
+    "apiKey": "API configuration error. Please check your settings.",
+    "quota": "API quota exceeded. Please try again later.",
+    "network": "Network error. Please check your connection and try again.",
+    "dismiss": "Dismiss",
+    "invalidFormat": "Please upload a valid image file (JPEG, PNG, or WebP)",
+    "fileSize": "File size must be less than 10MB",
+    "processing": "Failed to process the image. Please try again."
+  },
+  "loading": {
+    "analyzing": "Analyzing workplace safety...",
+    "wait": "This may take a few moments",
+    "step1": "Processing image data...",
+    "step2": "Identifying safety elements...",
+    "step3": "Evaluating risk levels...",
+    "timeEstimate": "This usually takes 10-30 seconds"
+  }
+}

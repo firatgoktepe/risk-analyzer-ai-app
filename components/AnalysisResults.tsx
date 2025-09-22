@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generateSafetyAnalysisPDF } from "@/lib/pdf-utils";
-import type { AnalysisResult } from "@/app/page";
+import type { AnalysisResult } from "@/types";
 
 interface AnalysisResultsProps {
   results: AnalysisResult;
