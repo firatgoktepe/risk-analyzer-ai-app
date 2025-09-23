@@ -103,7 +103,7 @@ Modify `/public/sw.js` to:
 2. Update manifest.json with production URLs
 3. Replace placeholder icons with final designs
 4. Test on multiple devices and browsers
-5. Submit to app stores if desired (using tools like PWA Builder)
+5. Submit to app stores if desired (using tools like PWA Builder).
 
 ## Troubleshooting
 
