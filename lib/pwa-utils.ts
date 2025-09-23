@@ -42,7 +42,7 @@ export const unregisterServiceWorker = async () => {
 
 export const isPWAInstalled = (): boolean => {
     return window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as any).standalone === true ||
+        (window.navigator as Navigator & { standalone?: boolean }).standalone === true ||
         document.referrer.includes('android-app://');
 };
 
@@ -63,7 +63,7 @@ export const addOnlineStatusListener = (callback: (isOnline: boolean) => void) =
     };
 };
 
-export const cacheData = async (key: string, data: any) => {
+export const cacheData = async (key: string, data: unknown) => {
     if ('caches' in window) {
         try {
             const cache = await caches.open('work-safety-analyzer-data');
