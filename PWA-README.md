@@ -26,9 +26,13 @@ This document explains the PWA features implemented in the Work Safety Analyzer 
 
 ### 4. Install Prompt Component
 
-- Automatic install prompt for supported browsers
-- Custom install button with better UX
-- Dismissal handling and session storage
+- **Smart Browser Detection**: Automatically detects browser type and platform
+- **Chrome/Edge Mobile**: Uses native `beforeinstallprompt` API for seamless installation
+- **Desktop Browsers**: Shows step-by-step instructions for manual installation
+- **iOS Safari**: Provides iOS-specific "Add to Home Screen" instructions
+- **Other Browsers**: Generic installation guidance
+- **Custom UI**: Beautiful modal with icons and clear instructions
+- **Dismissal Handling**: Session storage to prevent repeated prompts
 
 ### 5. PWA Utilities (`/lib/pwa-utils.ts`)
 
@@ -62,10 +66,11 @@ This document explains the PWA features implemented in the Work Safety Analyzer 
 
 ### 4. Browser Support
 
-- **Chrome/Edge**: Full PWA support with install prompts
+- **Chrome/Edge (Mobile)**: Full PWA support with automatic install prompts
+- **Chrome/Edge (Desktop)**: PWA support with manual install instructions
+- **Safari (iOS)**: Manual "Add to Home Screen" with step-by-step instructions
 - **Firefox**: Basic PWA support, manual install via menu
-- **Safari**: Limited PWA support, "Add to Home Screen" only
-- **Mobile browsers**: Varies by platform
+- **Other Mobile Browsers**: Manual install instructions provided
 
 ## Customization
 
