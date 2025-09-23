@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -20,9 +20,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Work Safety Analyzer",
     description: "AI-powered photo-based risk analysis for workplace safety",
     manifest: "/manifest.json",
-    themeColor: "#000000",
-    viewport:
-      "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
@@ -42,6 +39,17 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Work Safety Analyzer",
       description: "AI-powered photo-based risk analysis for workplace safety",
     },
+  };
+}
+
+export async function generateViewport(): Promise<Viewport> {
+  return {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover",
+    themeColor: "#000000",
   };
 }
 
