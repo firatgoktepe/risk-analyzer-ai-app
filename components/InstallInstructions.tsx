@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { X, Share, Plus, Menu } from "lucide-react";
 
 interface InstallInstructionsProps {
