@@ -13,6 +13,19 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+// Browser detection moved outside component for better performance
+const detectBrowser = () => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  const isDesktop = !isMobile;
+
+  return { isIOS, isSafari, isMobile, isDesktop };
+};
+
 export default function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
@@ -22,6 +35,7 @@ export default function PWAInstallPrompt() {
   const [browserType, setBrowserType] = useState<
     "ios-safari" | "desktop" | "mobile-other"
   >("mobile-other");
+  const [userInteracted, setUserInteracted] = useState(false);
 
   useEffect(() => {
     // Check if app is already installed
@@ -30,14 +44,8 @@ export default function PWAInstallPrompt() {
       return;
     }
 
-    // Detect browser and platform
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
-    const isDesktop = !isMobile;
+    // Get browser detection once
+    const { isIOS, isSafari, isMobile, isDesktop } = detectBrowser();
 
     // Listen for the beforeinstallprompt event (Chrome/Edge only)
     const handleBeforeInstallPrompt = (e: Event) => {
@@ -59,15 +67,40 @@ export default function PWAInstallPrompt() {
     }
     window.addEventListener("appinstalled", handleAppInstalled);
 
-    // Show install prompt based on browser capabilities
+    // Add user interaction detection for faster prompt showing
+    const handleUserInteraction = () => {
+      setUserInteracted(true);
+    };
+
+    // Listen for user interactions
+    document.addEventListener("click", handleUserInteraction, { once: true });
+    document.addEventListener("scroll", handleUserInteraction, { once: true });
+    document.addEventListener("keydown", handleUserInteraction, { once: true });
+
+    // Show install prompt based on browser capabilities with smarter timing
+    const showPromptTimer = () => {
+      // If user has interacted, show much faster
+      if (userInteracted) {
+        return 500; // 0.5 seconds after interaction
+      }
+
+      // For Safari (iOS), show quickly as it needs manual instructions
+      if (isIOS && isSafari) {
+        return 2000; // 2 seconds for iOS Safari
+      }
+      // For Chrome/Edge with beforeinstallprompt, wait a bit longer
+      if (!isSafari) {
+        return 3000; // 3 seconds for Chrome/Edge
+      }
+      // For other browsers, show quickly
+      return 1500; // 1.5 seconds for other browsers
+    };
+
     const timer = setTimeout(() => {
       if (!isInstalled && !showInstallPrompt) {
-        // For Safari (iOS), always show manual install instructions
-        // For Chrome/Edge, only show if beforeinstallprompt didn't fire
-        // For desktop Chrome, show with different messaging
         setShowInstallPrompt(true);
       }
-    }, 10000); // Show after 10 seconds
+    }, showPromptTimer());
 
     return () => {
       if (!isSafari) {
@@ -77,19 +110,16 @@ export default function PWAInstallPrompt() {
         );
       }
       window.removeEventListener("appinstalled", handleAppInstalled);
+      document.removeEventListener("click", handleUserInteraction);
+      document.removeEventListener("scroll", handleUserInteraction);
+      document.removeEventListener("keydown", handleUserInteraction);
       clearTimeout(timer);
     };
-  }, [isInstalled, showInstallPrompt]);
+  }, [isInstalled, showInstallPrompt, userInteracted]);
 
   const handleInstallClick = async () => {
-    // Detect browser and platform
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
-    const isDesktop = !isMobile;
+    // Use optimized browser detection
+    const { isIOS, isSafari, isMobile, isDesktop } = detectBrowser();
 
     if (deferredPrompt) {
       // Chrome/Edge with beforeinstallprompt support
@@ -137,14 +167,8 @@ export default function PWAInstallPrompt() {
     return null;
   }
 
-  // Detect browser and platform for UI
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  const isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  const isDesktop = !isMobile;
+  // Use optimized browser detection for UI
+  const { isIOS, isSafari, isMobile, isDesktop } = detectBrowser();
 
   // Get appropriate button text and description
   const getInstallText = () => {
